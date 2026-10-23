@@ -1,0 +1,15 @@
+Analyze this synthetic payload using audit_html. Explain findings, assumptions and next actions. Do not invent facts.
+
+{
+  "pages": [
+    {
+      "url": "https://example.com/",
+      "html": "<html lang=\"en\"><title>Example service</title><h1>Example service</h1><img src=\"hero.png\"><a href=\"/missing\">Details</a></html>"
+    },
+    {
+      "url": "https://example.com/missing",
+      "status": 404,
+      "html": "<title>Not found</title>"
+    }
+  ]
+}

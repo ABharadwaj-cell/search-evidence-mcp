@@ -1,0 +1,17 @@
+name: Bug report
+description: Report a reproducible problem using synthetic data
+title: "[Bug] "
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and expected behavior
+      description: Include version and a minimal synthetic example. No secrets or customer data.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and test output
+    validations:
+      required: true

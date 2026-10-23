@@ -1,0 +1,130 @@
+{
+  "kind": "search_audit",
+  "schema_version": "1.0",
+  "generated_at": "2026-10-23T20:07:09.460509+00:00",
+  "scope": {
+    "pages": 2,
+    "method": "static_html"
+  },
+  "findings": [
+    {
+      "code": "http_error",
+      "severity": "high",
+      "url": "https://example.com/missing",
+      "evidence": "HTTP 404",
+      "action": "Restore the intended page or update links to a valid replacement.",
+      "confidence": "observed"
+    },
+    {
+      "code": "broken_sampled_link",
+      "severity": "medium",
+      "url": "https://example.com/",
+      "evidence": "https://example.com/missing returned 404",
+      "action": "Update or remove this internal link.",
+      "confidence": "observed"
+    },
+    {
+      "code": "description_missing",
+      "severity": "low",
+      "url": "https://example.com/",
+      "evidence": "No meta description",
+      "action": "Supply a helpful summary; Google may choose a different snippet.",
+      "confidence": "observed"
+    },
+    {
+      "code": "image_alt_missing",
+      "severity": "low",
+      "url": "https://example.com/",
+      "evidence": "1 images lack alt attributes",
+      "action": "Describe meaningful images; use empty alt for decorative ones.",
+      "confidence": "observed"
+    },
+    {
+      "code": "description_missing",
+      "severity": "low",
+      "url": "https://example.com/missing",
+      "evidence": "No meta description",
+      "action": "Supply a helpful summary; Google may choose a different snippet.",
+      "confidence": "observed"
+    },
+    {
+      "code": "h1_missing",
+      "severity": "low",
+      "url": "https://example.com/missing",
+      "evidence": "No nonempty H1",
+      "action": "Give the page a descriptive main heading for readers.",
+      "confidence": "observed"
+    },
+    {
+      "code": "language_missing",
+      "severity": "low",
+      "url": "https://example.com/missing",
+      "evidence": "html lang absent",
+      "action": "Declare the document language for assistive technology.",
+      "confidence": "observed"
+    },
+    {
+      "code": "limited_extracted_text",
+      "severity": "info",
+      "url": "https://example.com/",
+      "evidence": "5 words in static HTML",
+      "action": "Inspect rendered content and page purpose; this is not a thin-content verdict.",
+      "confidence": "heuristic"
+    },
+    {
+      "code": "limited_extracted_text",
+      "severity": "info",
+      "url": "https://example.com/missing",
+      "evidence": "2 words in static HTML",
+      "action": "Inspect rendered content and page purpose; this is not a thin-content verdict.",
+      "confidence": "heuristic"
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://example.com/",
+      "status": 200,
+      "title": "Example service",
+      "description": "",
+      "canonicals": [],
+      "robots": "",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Example service"
+        }
+      ],
+      "lang": "en",
+      "links": [
+        "https://example.com/missing"
+      ],
+      "missing_alt": 1,
+      "word_count": 5,
+      "schema_types": [],
+      "schema_errors": [],
+      "content_sha256": "0553889b815c96ee3d13daaa0c2ab99c317db18a7a22b3c4a734111d3d04c25c"
+    },
+    {
+      "url": "https://example.com/missing",
+      "status": 404,
+      "title": "Not found",
+      "description": "",
+      "canonicals": [],
+      "robots": "",
+      "headings": [],
+      "lang": "",
+      "links": [],
+      "missing_alt": 0,
+      "word_count": 2,
+      "schema_types": [],
+      "schema_errors": [],
+      "content_sha256": "60bae03e9409a6837c071b055afc9f672710e35fa8a8f82874d56351e8b0e620"
+    }
+  ],
+  "limitations": [
+    "Static HTML only; JavaScript rendering and Core Web Vitals are not measured.",
+    "No ranking score, traffic uplift or AI citation probability is inferred.",
+    "JSON-LD syntax/type detection does not certify eligibility or factual accuracy.",
+    "Status and HTML supplied by the caller are not independently fetched."
+  ]
+}

@@ -71,7 +71,17 @@ def test_duplicate_grain_and_invalid_clicks_rejected():
 
 
 @pytest.mark.parametrize(
-    "address", ["127.0.0.1", "10.0.0.1", "169.254.169.254", "::1", "192.168.0.1", "0.0.0.0"]
+    "address",
+    [
+        "127.0.0.1",
+        "10.0.0.1",
+        "169.254.169.254",
+        "::1",
+        "192.168.0.1",
+        "0.0.0.0",
+        "224.0.0.1",
+        "ff02::1",
+    ],
 )
 def test_ssrf_private_dns_blocked(monkeypatch, address):
     monkeypatch.setenv("ALLOWED_CRAWL_HOSTS", "example.com")

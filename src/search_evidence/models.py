@@ -56,9 +56,9 @@ class SearchRow(StrictModel):
     query: str = Field(min_length=1, max_length=500)
     page: str
     date: date
-    clicks: int = Field(ge=0, strict=True)
-    impressions: int = Field(ge=0, strict=True)
-    position: float = Field(ge=0)
+    clicks: int = Field(ge=0, le=1_000_000_000_000, strict=True)
+    impressions: int = Field(ge=0, le=1_000_000_000_000, strict=True)
+    position: float = Field(ge=0, le=10000)
 
     _page = field_validator("page")(public_url)
 

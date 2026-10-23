@@ -33,7 +33,12 @@ def destination(url):
     if host not in allowed:
         raise ValueError("Host is not explicitly allowed by ALLOWED_CRAWL_HOSTS")
     addresses = sorted({r[4][0] for r in socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)})
-    if not addresses or any(not ipaddress.ip_address(a).is_global for a in addresses):
+    if not addresses or any(
+        not ipaddress.ip_address(a).is_global
+        or ipaddress.ip_address(a).is_multicast
+        or ipaddress.ip_address(a).is_reserved
+        for a in addresses
+    ):
         raise ValueError("Destination must resolve exclusively to globally routable IP addresses")
     return parsed, host, port, addresses[0]
 

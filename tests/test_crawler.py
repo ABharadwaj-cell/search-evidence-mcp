@@ -71,3 +71,21 @@ def test_robots_failure_is_fail_closed(monkeypatch):
     monkeypatch.setattr(crawler, "fetch", lambda *args: (args[0], 503, {}, ""))
     with pytest.raises(ValueError, match="robots"):
         crawler.crawl_site(CrawlInput(url="https://example.com/"))
+
+@pytest.mark.parametrize(
+    "url, error",
+    [
+        ("https://@example.com/", "Credentials"),
+        ("http://example.com:0/", "Nonstandard ports"),
+        ("https://example.com:0/", "Nonstandard ports"),
+    ],
+)
+def test_crawler_rejects_empty_userinfo_and_zero_port_before_dns(monkeypatch, url, error):
+    monkeypatch.setenv("ALLOWED_CRAWL_HOSTS", "example.com")
+
+    def unexpected_dns(*args, **kwargs):
+        pytest.fail("Invalid authority must be rejected before DNS resolution")
+
+    monkeypatch.setattr(crawler.socket, "getaddrinfo", unexpected_dns)
+    with pytest.raises(ValueError, match=error):
+        crawler.destination(url)

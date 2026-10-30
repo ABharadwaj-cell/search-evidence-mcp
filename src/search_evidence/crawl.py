@@ -21,9 +21,9 @@ def destination(url):
     parsed = urlsplit(url)
     if parsed.scheme not in {"http", "https"} or not parsed.hostname:
         raise ValueError("HTTP(S) required")
-    if parsed.username or parsed.password or parsed.fragment:
+    if parsed.username is not None or parsed.password is not None or parsed.fragment:
         raise ValueError("Credentials and fragments forbidden")
-    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    port = parsed.port if parsed.port is not None else (443 if parsed.scheme == "https" else 80)
     if port != (443 if parsed.scheme == "https" else 80):
         raise ValueError("Nonstandard ports forbidden")
     host = parsed.hostname.encode("idna").decode("ascii").lower()

@@ -13,7 +13,7 @@ authors = [{name = "Akhilesh Bharadwaj"}]
 dependencies = ["mcp==1.30.0", "openai==2.54.0", "pydantic==2.14.1", "beautifulsoup4==4.15.0"]
 
 [project.optional-dependencies]
-dev = ["pytest==9.1.1", "pytest-asyncio==1.4.0", "ruff==0.17.2", "pip-audit==2.10.1"]
+dev = ["pytest==9.1.1", "pytest-asyncio==1.4.1.post1", "ruff==0.17.2", "pip-audit==2.10.1"]
 
 [project.scripts]
 search-evidence-mcp = "search_evidence.cli:main"

@@ -71,3 +71,22 @@ def test_robots_failure_is_fail_closed(monkeypatch):
     monkeypatch.setattr(crawler, "fetch", lambda *args: (args[0], 503, {}, ""))
     with pytest.raises(ValueError, match="robots"):
         crawler.crawl_site(CrawlInput(url="https://example.com/"))
+
+
+def test_error_page_is_audited_without_following_its_links(monkeypatch):
+    requested = []
+
+    def fake_fetch(url, origin, deadline, robots=None):
+        requested.append(url)
+        if url.endswith("/robots.txt"):
+            return url, 404, {}, ""
+        return url, 404, {"content-type": "text/html"}, '<title>Not found</title><a href="/next">Next</a>'
+
+    monkeypatch.setattr(crawler, "fetch", fake_fetch)
+    monkeypatch.setattr(crawler, "destination", lambda url: None)
+    monkeypatch.setattr(crawler.time, "sleep", lambda seconds: None)
+    result = crawler.crawl_site(CrawlInput(url="https://example.com/", max_pages=3))
+
+    assert requested == ["https://example.com/robots.txt", "https://example.com/"]
+    assert result["crawl"]["attempted"] == 1
+    assert any(f["code"] == "http_error" for f in result["findings"])

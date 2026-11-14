@@ -141,7 +141,8 @@ def crawl_site(payload: CrawlInput) -> dict:
             pages.append(page)
         if sum(len(p.html) for p in pages) > 5_000_000:
             raise ValueError("Combined page budget exceeded")
-        if depth < payload.max_depth:
+        # Error pages are audited, but their links are not crawl discovery sources.
+        if code < 400 and depth < payload.max_depth:
             for link in page_facts(page)["links"]:
                 if origin_key(link) == origin and link not in seen and len(queue) < 100:
                     queue.append((link, depth + 1))
